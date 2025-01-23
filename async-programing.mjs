@@ -1,6 +1,5 @@
-// async-programing.mjs
-import fetch from 'node-fetch';  // Using ESM import
-
+//async-await and fetch
+import fetch from 'node-fetch';  
 async function getDataFromAPI() {
   try {
     const response = await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json');
@@ -12,3 +11,5 @@ async function getDataFromAPI() {
 }
 
 getDataFromAPI();
+
+
