@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+</head>
+<body>
+   <div id="d">
+   <!-- <button id="but" type="button">Click Me!</button>
+   <h1 id="print"></h1> -->
+   <button onclick="myFunction()">Try it</button>
+
+
+   </div>
+   <script src="app.js">
+
+
+const button=document.getElementById("but");
+console.log(button)
+
+
+document.getElementById("but").onclick=function(){
+   console.log("clicked")
+}
+
+
+
+
+document.getElementById("but").addEventListener("click",display);
+
+
+function display(){
+   document.getElementById("print").innerHTML=Date();
+}
+
+
+function myFunction() {
+   var x = document.createElement("BUTTON");
+   var t = document.createTextNode("Click me");
+   x.appendChild(t);
+   document.body.appendChild(x);
+ }
+
+
+   </script>
+</body>
+</html>
