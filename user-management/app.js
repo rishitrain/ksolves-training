@@ -23,10 +23,10 @@ app.get('/user/:id', async (req, res) => {
         if (result.rows.length > 0) {
             res.json(result.rows[0]);  
         } else {
-            res.status(404).send('User not found');
+            res.send('User not found');
         }
     } catch (err) {
-        console.error('Error querying the database:', err);
+        console.log('Error querying the database:', err);
      }
 });
 
@@ -36,7 +36,7 @@ app.post('/user', async (req, res) => {
     const { username, email, password } = req.body;  
 
      if (!username || !email || !password) {
-        return res.status(400).send('Missing fields');
+        return res.send('Missing fields');
     }
 
     try {
@@ -45,9 +45,9 @@ app.post('/user', async (req, res) => {
             [username, email, password]
         );
 
-         res.status(201).json(result.rows[0]);  
+         res.json(result.rows[0]);  
     } catch (err) {
-        console.error('Error inserting user:', err);
+        console.log('Error inserting user:', err);
      }
 });
 
@@ -59,15 +59,42 @@ app.delete('/user/:id', async (req, res) => {
          const result = await db.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
 
         if (result.rowCount > 0) {
-             res.status(200).json({ message: 'User deleted successfully', user: result.rows[0] });
+             res.json({ message: 'User deleted successfully', user: result.rows[0] });
         } else {
              console.log('User not found');
         }
     } catch (err) {
-        console.error('Error deleting user:', err);
+        console.log('Error deleting user:', err);
      }
 });
- 
+
+
+
+app.put('/user/:id', async (req, res) => {
+    const id = parseInt(req.params.id);   
+    const { username, email, password } = req.body; 
+
+     if (!username || !email || !password) {
+        return res.json({ error: 'All fields (username, email, password) are required' });
+    }
+
+    try {
+         const result = await db.query(
+            `UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *`,
+            [username, email, password, id]   
+        );
+
+         if (result.rows.length === 0) {
+            return res.json({ error: 'User not found' });
+        }
+
+         res.json({ user: result.rows[0] });
+    } catch (err) {
+        console.log('Error updating user:', err);  
+        res .json({ error: 'Something went wrong, please try again' });   
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
