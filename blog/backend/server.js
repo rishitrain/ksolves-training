@@ -15,6 +15,7 @@ const  homeroute=require('./routes/userroutes')
 const blogfetch=require('./routes/blogroutes')
 const pendingblog=require('./routes/blogroutes')
 const approvedblog=require('./routes/blogroutes')
+const wantoapprov=require('./routes/blogroutes')
 
 
 
@@ -26,6 +27,7 @@ app.use('/signup',signuproute);
 app.use('/blogs',blogfetch);
 app.use('/api',pendingblog);
 app.use('/approved',approvedblog);
+app.use('/wanttoapprove',wantoapprov);
 
  
 

@@ -27,7 +27,7 @@ function App() {
        element={<PrivateRoute element={Creation}/>}
       />
 
-     <Route path="/admin" element={<AdminPage/>} />
+     <Route path="/admin" element={<PrivateRoute element={AdminPage}/>}/>
       </Routes>
     </>
   );

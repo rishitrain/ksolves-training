@@ -1,17 +1,17 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useNavigate } from 'react-router-dom';   
 
 function Creation() {
   const [blogname, setBlogname] = useState('');
   const [blogcontent, setBlogcontent] = useState('');
-  const navigate = useNavigate();  // useNavigate instead of useHistory
+  const navigate = useNavigate();   
 
   const handleSubmit = async (e) => {
     e.preventDefault();  
     
     try {
-      await axios.post('http://localhost:3001/blogs/createblog', { blogname, blogcontent });
+      await axios.post('http://localhost:3001/api/pending', { blogname, blogcontent });
       navigate('/blog');   
     } catch (error) {
       console.error('Error creating blog:', error);

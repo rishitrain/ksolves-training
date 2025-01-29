@@ -50,13 +50,15 @@ router.post('/user/login', async (req, res) => {
 
 router.post('/user/signup', async (req, res) => {
     const { username,email,password } = req.body;
+     let {isadmin}=req.body;
+    isadmin=false;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const result = await db.query(
-            'INSERT INTO users (username,email,password) VALUES ($1,$2,$3) RETURNING *',
-            [username,email,hashedPassword]
+            'INSERT INTO users (username,email,password,isadmin) VALUES ($1,$2,$3,$4) RETURNING *',
+            [username,email,hashedPassword,isadmin]
         );
 
         res.status(201).json({ message: 'User registered', user: result.rows[0] });

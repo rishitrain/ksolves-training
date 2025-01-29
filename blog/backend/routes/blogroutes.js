@@ -12,7 +12,7 @@ router.get('/getblogs', async (req, res) => {
             return res.status(404).json({ message: 'No blogs found' });
         }
 
-        res.json(result.rows);  // Return all blogs as an array
+        res.json(result.rows);  
     } catch (error) {
         console.error('Error fetching blogs:', error);
         res.status(500).json({ error: 'Failed to fetch blogs' });
@@ -56,5 +56,36 @@ router.get('/pending', async (req, res) => {
     }
   });
 
+  router.post('/pending', async (req, res) => {
+    const {blogname,blogcontent}=req.body;
+
+    let {isapproved} =req.body;
+    isapproved=false;
+
+    try {
+         const result = await db.query(
+    'INSERT INTO blogt (blog_name,blog_content,isapproved) VALUES ($1,$2,$3) RETURNING *',
+    [blogname,blogcontent,isapproved]);
+
+    res.json(result.rows[0])
+    } catch (error) {
+        console.log("error creating blog")
+    }}
+  );
+
+
+  router.patch('/wantoapprov/:id', async (req, res) => {
+    const { id } = req.params; 
+    try {
+      const result = await db.query(
+        "UPDATE blogt SET isapproved=TRUE WHERE blog_id=$1 RETURNING *", [id]
+      );
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.log("Error approving blog", error);
+      res.status(500).send("Internal Server Error");
+    }
+ });
+ 
 
 module.exports=router
