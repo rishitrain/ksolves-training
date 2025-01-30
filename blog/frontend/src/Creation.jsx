@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';   
+import { jwtDecode } from "jwt-decode";
 
 function Creation() {
   const [blogname, setBlogname] = useState('');
@@ -8,15 +9,22 @@ function Creation() {
   const navigate = useNavigate();   
 
   const handleSubmit = async (e) => {
-    e.preventDefault();  
+    e.preventDefault();
     
+    const res = localStorage.getItem("token");
+    const decodedToken = jwtDecode(res);
+    console.log(decodedToken);
+    const id = decodedToken.userId;
+    console.log(id);   
+  
     try {
-      await axios.post('http://localhost:3001/api/pending', { blogname, blogcontent });
+      await axios.post('http://localhost:3000/api/pending', { blogname, blogcontent, id });
       navigate('/blog');   
     } catch (error) {
       console.error('Error creating blog:', error);
     }
   };
+  
 
   return (
     <>

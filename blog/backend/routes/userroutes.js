@@ -50,8 +50,8 @@ router.post('/user/login', async (req, res) => {
 
 router.post('/user/signup', async (req, res) => {
     const { username,email,password } = req.body;
-     let {isadmin}=req.body;
-    isadmin=false;
+     
+    let isadmin=false;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -69,4 +69,4 @@ router.post('/user/signup', async (req, res) => {
 
 
 
-module.exports=router
+module.exports=router;

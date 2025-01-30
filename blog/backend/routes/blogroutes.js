@@ -57,21 +57,23 @@ router.get('/pending', async (req, res) => {
   });
 
   router.post('/pending', async (req, res) => {
-    const {blogname,blogcontent}=req.body;
-
-    let {isapproved} =req.body;
-    isapproved=false;
-
+    
+    const { blogname, blogcontent } = req.body;
+    let { isapproved } = req.body;
+    isapproved = false;
+    const id = req.body.id;
+  
     try {
-         const result = await db.query(
-    'INSERT INTO blogt (blog_name,blog_content,isapproved) VALUES ($1,$2,$3) RETURNING *',
-    [blogname,blogcontent,isapproved]);
-
-    res.json(result.rows[0])
+      const result = await db.query(
+        'INSERT INTO blogt (blog_name, blog_content, isapproved, id) VALUES ($1, $2, $3, $4) RETURNING *',
+        [blogname, blogcontent, isapproved, id]
+      );
+      res.json(result.rows[0]);
     } catch (error) {
-        console.log("error creating blog")
-    }}
-  );
+      console.log("Error creating blog", error);
+    }
+  });
+  
 
 
   router.patch('/wantoapprov/:id', async (req, res) => {
@@ -83,9 +85,30 @@ router.get('/pending', async (req, res) => {
       res.json(result.rows[0]);
     } catch (error) {
       console.log("Error approving blog", error);
-      res.status(500).send("Internal Server Error");
-    }
+     }
  });
  
+
+
+
+ router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+
+
+  try {
+       const result = await db.query(
+          'SELECT * FROM blogt WHERE blog_id = $1', 
+          [id]
+      );
+       if (result.rows.length === 0) {
+          return res.status(404).json({ message: 'Blog post not found' });
+      }
+
+       res.json(result.rows[0]);
+  } catch (error) {
+      console.error('Error displaying blog:', error);
+   }
+});
+
 
 module.exports=router

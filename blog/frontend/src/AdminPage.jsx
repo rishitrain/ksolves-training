@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function AdminPage() {
   const [pendingBlogs, setPendingBlogs] = useState([]);
@@ -9,7 +10,7 @@ function AdminPage() {
   useEffect(() => {
     const fetchPendingBlogs = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/pending');   
+        const response = await axios.get('http://localhost:3000/api/pending');   
         setPendingBlogs(response.data);   
       } catch (err) {
         setError('Error fetching pending blogs');
@@ -19,7 +20,7 @@ function AdminPage() {
 
     const fetchapprovedblogs = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/approved');   
+        const response = await axios.get('http://localhost:3000/api/approved');   
         setapprovedblogs(response.data);   
       } catch (err) {
         setError('Error fetching approved blogs');
@@ -33,7 +34,7 @@ function AdminPage() {
 
   const wanttoapprov = async (id) => {
     try {
-      const response = await axios.patch(`http://localhost:3001/api/wantoapprov/${id}`);
+      const response = await axios.patch(`http://localhost:3000/api/wantoapprov/${id}`);
       
        const updatedPendingBlogs = pendingBlogs.filter(blog => blog.blog_id !== id);
       setPendingBlogs(updatedPendingBlogs);
@@ -60,10 +61,13 @@ function AdminPage() {
       <div className="container mx-auto p-4">
         <p className="text-2xl font-semibold text-center mb-6">Pending</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          
           {pendingBlogs.map((pendingBlog, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+              <Link to={`/blog/${pendingBlog.blog_id}`}>
               <h3 className="text-xl font-bold text-gray-900">{pendingBlog.blog_name}</h3>
               <p className="mt-2 text-gray-700">{pendingBlog.blog_content}...</p>
+              </Link>
               <button onClick={() => wanttoapprov(pendingBlog.blog_id)}>To Approve</button>
             </div>
           ))}
@@ -84,8 +88,10 @@ function AdminPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {approvedblogs.map((approvedblog, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                <Link to={`/blog/${approvedblog.blog_id}`}>
                 <h3 className="text-xl font-bold text-gray-900">{approvedblog.blog_name}</h3>
                 <p className="mt-2 text-gray-700">{approvedblog.blog_content}...</p>
+                </Link>
               </div>
                 ))}
               </div>

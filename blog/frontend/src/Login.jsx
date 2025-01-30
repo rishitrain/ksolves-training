@@ -16,17 +16,15 @@ function Login() {
     e.preventDefault();
   
     try {
-      const response = await axios.post('http://localhost:3001/user/login', { username, password });
+      const response = await axios.post('http://localhost:3000/user/login', { username, password });
       setMessage(response.data.message);
       
       const token = response.data.token;
       localStorage.setItem('token', token);
   
        const decodedToken = jwtDecode(token);
-       console.log(decodedToken);
-       const isAdmin = decodedToken.isadmin;
-       console.log(isAdmin);
-       
+        const isAdmin = decodedToken.isadmin;
+        
        if (isAdmin) {
         navigate('/admin');  
       } else {

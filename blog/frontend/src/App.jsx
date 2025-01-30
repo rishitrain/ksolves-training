@@ -8,19 +8,26 @@ import BlogPage from './BlogPage';
 import PrivateRoute from './PrivateRoute';   
 import Creation from './Creation'
 import AdminPage from './AdminPage'
+import BlogDisplay from './Blogdisplay';
  
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
+      <Route path="/" element={<Signup />} />
+      {/* <Route path="/signup" element={<Signup />} /> */}
         <Route path="/login" element={<Login />} />
 
          <Route
           path="/blog"
           element={<PrivateRoute element={BlogPage} />}
+
         />
+
+       <Route
+       path='/blog/:id'
+       element={<BlogDisplay/>}/>  
+
 
       <Route 
        path="/createblog"

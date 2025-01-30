@@ -9,27 +9,20 @@ const authenticate =require('./middleware')
 app.use(express.json());
 app.use(cors());
 
-const loginroute=require('./routes/userroutes')
-const  signuproute=require('./routes/userroutes')
-const  homeroute=require('./routes/userroutes')
-const blogfetch=require('./routes/blogroutes')
-const pendingblog=require('./routes/blogroutes')
-const approvedblog=require('./routes/blogroutes')
-const wantoapprov=require('./routes/blogroutes')
+ const  userroutes=require('./routes/userroutes')
+ const blogroutes=require('./routes/blogroutes')
+ const  commentsroutes=require('./routes/commentsroutes')
+const port = 3000;
 
-
-
-const port = 3001;
-
-app.use('/',homeroute);
-app.use('/login',loginroute);
-app.use('/signup',signuproute);
-app.use('/blogs',blogfetch);
-app.use('/api',pendingblog);
-app.use('/approved',approvedblog);
-app.use('/wanttoapprove',wantoapprov);
-
- 
+app.use('/',userroutes);
+app.use('/login',userroutes);
+app.use('/signup',userroutes);
+app.use('/blogs',blogroutes);
+app.use('/api',blogroutes);
+app.use('/approved',blogroutes);
+app.use('/wanttoapprove',blogroutes);
+app.use('/display',blogroutes)
+app.use('/',commentsroutes)
 
 
 app.get('/auth', authenticate, (req, res) => {
