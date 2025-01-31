@@ -38,6 +38,7 @@ function AdminPage() {
       
        const updatedPendingBlogs = pendingBlogs.filter(blog => blog.blog_id !== id);
       setPendingBlogs(updatedPendingBlogs);
+
       const approvedBlog = pendingBlogs.find(blog => blog.blog_id === id);
       setapprovedblogs([...approvedblogs, approvedBlog]);
 
@@ -48,14 +49,12 @@ function AdminPage() {
 
   return (
     <div className="admin-page">
-      <h1>Admin Dashboard</h1>
-
-      {error && <p className="error">{error}</p>}
+      <h1 className='text-3xl justify-self-center bg-gray-800 text-white m-2 p-2' >Admin Dashboard</h1>
 
       <div>
-        <h2>Pending Blogs</h2>
-        {pendingBlogs.length === 0 ? (
-          <p>No pending blogs found</p>
+      <p className="text-2xl font-semibold text-center mb-6">Pending</p>
+      {pendingBlogs.length === 0 ? (
+          <p className='justify-self-center'>No pending blogs found</p>
         ) : (
           <div>
       <div className="container mx-auto p-4">
@@ -68,7 +67,7 @@ function AdminPage() {
               <h3 className="text-xl font-bold text-gray-900">{pendingBlog.blog_name}</h3>
               <p className="mt-2 text-gray-700">{pendingBlog.blog_content}...</p>
               </Link>
-              <button onClick={() => wanttoapprov(pendingBlog.blog_id)}>To Approve</button>
+              <button className='m-2 p-2 rounded-2xl bg-black text-white' onClick={() => wanttoapprov(pendingBlog.blog_id)}>To Approve</button>
             </div>
           ))}
               </div>
@@ -78,7 +77,7 @@ function AdminPage() {
       </div>
 
       <div>
-        <h2>Approved Blogs</h2>
+       
         {approvedblogs.length === 0 ? (
           <p>No approved blogs found</p>
         ) : (

@@ -110,5 +110,24 @@ router.get('/pending', async (req, res) => {
    }
 });
 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+
+  try {
+       const result = await db.query(
+          'DELETE FROM blogt WHERE blog_id = $1', 
+          [id]
+      );
+       if (result.rows.length === 0) {
+          return res.status(404).json({ message: 'Blog deleted' });
+      }
+
+       res.json(result.rows[0]);
+  } catch (error) {
+      console.error('Error DELETING blog:', error);
+   }
+});
+
 
 module.exports=router

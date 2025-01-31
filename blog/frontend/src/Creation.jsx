@@ -19,6 +19,7 @@ function Creation() {
   
     try {
       await axios.post('http://localhost:3000/api/pending', { blogname, blogcontent, id });
+      alert("Thank You for creating Blog , Wait till the Admin Approves it !!")
       navigate('/blog');   
     } catch (error) {
       console.error('Error creating blog:', error);
