@@ -1,61 +1,80 @@
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:3000"); 
+import React, { useEffect, useState, useMemo } from 'react';
+import { io } from 'socket.io-client';
 
 function App() {
-  const [userid, setId] = useState("");
-  const [message, setMessage] = useState("");
+  const socket = useMemo(() => io("http://localhost:5000"), []);
+  const [mes, setMes] = useState('');
+  const [room, setRoom] = useState('');
+  const [join, setJoin] = useState('');
+  const [socketId, setSocketId] = useState('');
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log("Connected:", socket.id);
-      setId(socket.id);
-    });
-
-    socket.on("get", (data) => {
-      setMessages((prev) => [...prev, data]);  
-    });
-
-    return () => {
-      socket.disconnect();  
-    };
-  }, []);
-
-  const sendMessage = () => {
-    if (message.trim()) {
-      const msgData = { user: userid, text: message };
-      socket.emit("send", msgData);
-      setMessage("");  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (mes && room) {
+      socket.emit("message", { mes, room });
+      setMes('');
     }
   };
 
+  const handleRoom = (e) => {
+    e.preventDefault();
+    if (join) {
+      socket.emit("join-room", join);
+      setJoin('');
+    }
+  };
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      setSocketId(socket.id);
+      console.log("user connected", `${socket.id}`);
+    });
+
+    socket.on("recieve", (data) => {
+      setMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
+
   return (
     <>
-      <h1>User Connected</h1>
-      <h2>{userid}</h2>
+      <h1>{socketId}</h1>
 
-      <div>
+      <form onSubmit={handleRoom}>
         <input
-          type="text"
-          placeholder="Type a message..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          type='text'
+          value={join}
+          placeholder='join'
+          onChange={(e) => setJoin(e.target.value)}
         />
-        <button onClick={sendMessage}>Send</button>
-      </div>
+        <button>join room</button>
+      </form>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          value={room}
+          placeholder='room'
+          onChange={(e) => setRoom(e.target.value)}
+        />
+        <input
+          type='text'
+          value={mes}
+          placeholder='message'
+          onChange={(e) => setMes(e.target.value)}
+        />
+        <button>send</button>
+      </form>
 
       <div>
-        <h3>Chat Messages:</h3>
-        <ul>
-          {messages.map((msg, index) => (
-            <li key={index}>
-              <strong>{msg.user}:</strong> {msg.text}
-            </li>
-          ))}
-        </ul>
+        <h2>Messages:</h2>
+        {messages.map((msg, index) => (
+          <p key={index}>{msg}</p>
+        ))}
       </div>
     </>
   );
