@@ -1,12 +1,14 @@
 const express = require('express');
-const db = require('./db');
+const { db, connectDB } = require('./db');  
 const bodyParser = require('body-parser');
 const app = express();
+const cron = require('node-cron');
 
 app.use(bodyParser.json());
 
-const port = 3000;
-
+const port = 3005;
+ 
+connectDB();
 app.get('/', async (req, res) => {
     try {
          const result = await db.query('SELECT * FROM users');
@@ -95,6 +97,19 @@ app.put('/user/:id', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+const server=app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+process.on('SIGINT', () => {
+    console.info('SIGINT signal received.');
+    console.log('Closing http server.');
+    server.close(() => {
+      console.log('Http server closed.');
+       db.end(()=>{
+        console.log('PSQL closed.');
+        process.exit(0);
+       });
+
+    });
+  });

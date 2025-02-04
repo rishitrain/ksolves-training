@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-const client=new Client({
+const db = new Client({
     user: 'postgres',
     host: 'localhost',
     database: 'usermanagement',
@@ -8,17 +8,13 @@ const client=new Client({
     port: 5432,
 });
 
-
-client.connect()
-.then(()=>{
-    console.log("connected");
-})
-.catch(()=>{
-    console.log("error");
-    
-})
-
-module.exports = {
-    query: (text, params) => client.query(text, params),
-    client,
+const connectDB = async () => {
+    try {
+        await db.connect();
+        console.log("Database connected successfully!");
+    } catch (error) {
+        console.error("Database connection error:", error);
+    }
 };
+
+module.exports = { db, connectDB };
