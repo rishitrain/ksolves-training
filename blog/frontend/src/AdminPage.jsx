@@ -52,8 +52,7 @@ function AdminPage() {
       <h1 className='text-3xl justify-self-center bg-gray-800 text-white m-2 p-2' >Admin Dashboard</h1>
 
       <div>
-      <p className="text-2xl font-semibold text-center mb-6">Pending</p>
-      {pendingBlogs.length === 0 ? (
+       {pendingBlogs.length === 0 ? (
           <p className='justify-self-center'>No pending blogs found</p>
         ) : (
           <div>
