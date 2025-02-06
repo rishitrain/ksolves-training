@@ -1,21 +1,21 @@
 //simple callback 
 
-function func1(name,callback){
-      console.log(`${name}`,"greet");
-      callback();
+// function func1(name,callback){
+//       console.log(`${name}`,"greet");
+//       callback();
       
-}
+// }
 
-function func2(){
-    console.log("hello i am there ");
+// function func2(){
+//     console.log("hello i am there ");
 
-}
+// }
 
-func1("Ak" , func2);
+// func1("Ak" , func2);
 
 
 
-//settimeout 
+// //settimeout 
 
 function getdata(callback){
     setTimeout(()=>{
