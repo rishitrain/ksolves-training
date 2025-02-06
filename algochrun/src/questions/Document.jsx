@@ -10,7 +10,7 @@ function Document() {
         setMsg(prevMsg =>  inputValue + prevMsg);  
         setValue("");  
     };
-
+ 
     return (
         <div>
             <form>
@@ -27,7 +27,6 @@ function Document() {
             </form>
 
             <textarea 
-                 
                 value={msg}
                 placeholder="Messages will appear here..."
                 readOnly 
