@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Comments from './Comments';  
+import Comments from '../components/Comments';  
 
 function BlogDisplay() {
   const { id } = useParams();
@@ -10,7 +10,7 @@ function BlogDisplay() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/display/${id}`);
+        const res = await axios.get(`http://localhost:3000/api/blogs/${id}`);
         setBlog(res.data);
       } catch (error) {
         console.log('Error fetching the blog:', error);

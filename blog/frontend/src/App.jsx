@@ -1,14 +1,13 @@
 // App.js
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import Home from './Home';
-import Signup from './Signup';
-import Login from './Login';
-import BlogPage from './BlogPage';
-import PrivateRoute from './PrivateRoute';   
-import Creation from './Creation'
-import AdminPage from './AdminPage'
-import BlogDisplay from './Blogdisplay';
+ import Signup from './pages/Signup';
+import Login from './pages/Login';
+import BlogPage from './pages/BlogPage';
+import PrivateRoute from './components/PrivateRoute';   
+import Creation from './pages/Creation'
+import AdminPage from './pages/AdminPage'
+import BlogDisplay from './pages/Blogdisplay';
  
 function App() {
   return (

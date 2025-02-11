@@ -16,7 +16,7 @@ function Login() {
     e.preventDefault();
   
     try {
-      const response = await axios.post('http://localhost:3000/user/login', { username, password });
+      const response = await axios.post('http://localhost:3000/api/users/login', { username, password });
       setMessage(response.data.message);
       
       const token = response.data.token;
@@ -65,25 +65,29 @@ function Login() {
     
     <button
       type="submit"
-      className="w-full py-3 bg-gray-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
+      className="w-full py-2 bg-gray-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
     >
       Login
     </button>
+
+    <button onClick={handleSubmit}
+      className=" p-2 m-2 bg-gray-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
+      >Login for Admin</button>
+
     
     {message && <p className="mt-4 text-center text-red-500">{message}</p>}
     <div>
     Don't have an Account ? 
   </div>
   <Link
-  to="/signup"
+  to="/"
   className="text-blue-800"
 >
   Signup
   </Link>
   </form>
 
-  <button onClick={handleSubmit}>Login for Admin</button>
-
+ 
   
   </div>
 </>

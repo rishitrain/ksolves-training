@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Logout from './Logout'
+import Logout from '../components/Logout'
 import {jwtDecode} from 'jwt-decode'
 
 
@@ -11,7 +11,7 @@ function BlogPage() {
   // const[username,setusername]=useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/approved')
+    axios.get('http://localhost:3000/api/blogs/approved')
       .then(res => {
         console.log(res.data);
         setBlogs(res.data);
@@ -37,7 +37,7 @@ function BlogPage() {
       <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
     <p className="text-2xl font-semibold text-center">Welcome to Your Blog Page</p>
-    <div className='bg-gray-700 text-white w-max m-1.5 p-1.5 hover:shadow-xl transition-shadow duration-200'>
+    <div className='bg-gray-700 rounded-3xl  text-white w-max m-1.5 p-2 hover:shadow-xl transition-shadow duration-200'>
         <Logout />
     </div>
       </div>

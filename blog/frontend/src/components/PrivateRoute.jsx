@@ -8,7 +8,7 @@ function PrivateRoute({ element: Element, ...rest }) {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/auth', {
+        const response = await axios.get('http://localhost:3000/api/auth', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
