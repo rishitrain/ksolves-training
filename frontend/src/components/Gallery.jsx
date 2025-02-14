@@ -7,7 +7,7 @@ function Gallery() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-   const limit = 2;
+   const limit = 3;
   const sortOrder = "ASC";  
 
   useEffect(() => {
@@ -33,8 +33,8 @@ function Gallery() {
   };
 
   return (
-    <div className="gallery-container" style={{ padding: "20px" }}>
-      <div className="images-grid" style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginBottom: "20px" }}>
+    <div  style={{ padding: "20px" }}>
+      <div  style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginBottom: "20px" }}>
         {isLoading ? (
           <p>Loading images...</p>
         ) : images.length > 0 ? (

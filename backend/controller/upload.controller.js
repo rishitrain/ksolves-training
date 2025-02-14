@@ -20,7 +20,7 @@ exports.getImages = async (req, res) => {
     let { page, limit, sort } = req.query;
     
     page = parseInt(page) || 1;
-    limit = parseInt(limit) || 2;
+    limit = parseInt(limit) || 5;
     const offset = (page - 1) * limit;
     
      sort = sort && sort.toUpperCase() === "DESC" ? "DESC" : "ASC";
